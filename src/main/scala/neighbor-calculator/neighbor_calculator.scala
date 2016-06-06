@@ -1,9 +1,9 @@
-package neighbor_calculator
+package NeighborCalculator
 
 import scala.annotation.tailrec
-import breeze.linalg._
+import breeze.linalg.DenseVector
 
-object NeighborCalculator {
+object SimilarityCalculator {
 
   private lazy val list1 = List(1,0,1,1,0)
   private lazy val list3 = List(1,1,1,0,0)
@@ -17,8 +17,8 @@ object NeighborCalculator {
   //private lazy val vec4 = DenseVector(1,Nil,1,0,0)
 
   def calculate  = {
-    binarySimilarity(list1, list3, NeighborCalculator.jacaard)
-    binarySimilarity(vec1, vec3, NeighborCalculator.jacaard)
+    binarySimilarity(list1, list3, jacaard)
+    binarySimilarity(vec1, vec3, jacaard)
   }
 
   def jacaard(result: List[Int]) : Double  = result.sum.toDouble / result.length
@@ -29,8 +29,8 @@ object NeighborCalculator {
       case (x : DenseVector[Int], y: DenseVector[Int]) => vectorBinarySimilarity(x, y)
 
     }
-    val sim = similarityfx(simList)
-    println(sim)
+
+    similarityfx(simList)
   }
 
   def vectorBinarySimilarity(vector1: DenseVector[Int], vector2: DenseVector[Int]) = {

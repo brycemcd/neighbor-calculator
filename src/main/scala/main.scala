@@ -1,8 +1,8 @@
-import neighbor_calculator._
+import NeighborCalculator._
 
 object Main {
   def main(args: Array[String]) = {
-    NeighborCalculator.calculate
+    NeighborPreparator.test
     println("lame")
   }
 }
