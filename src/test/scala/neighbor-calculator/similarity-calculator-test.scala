@@ -74,5 +74,27 @@ class SimilarityCalculatorSpec extends FunSpec {
         }
       }
     }
+
+    describe(".reduceNonSimilarOcuurances") {
+      val overlap = (List(1,0), List(1,1))
+
+      it("removes items from both lists if one list indicates the event did not occur") {
+        val list1 = List(1,0,Nil,Nil,0)
+        val list2 = List(1,1,1,Nil,Nil)
+
+        assertResult(overlap) {
+          SimilarityCalculator.reduceNonSimilarOcuurances(list1, list2)
+        }
+      }
+
+      it("removes items given another number indicates removal") {
+        val list1 = List(1,0,-1,-1,0)
+        val list2 = List(1,1,1,-1,-1)
+
+        assertResult(overlap) {
+          SimilarityCalculator.reduceNonSimilarOcuurances(list1, list2, -1)
+        }
+      }
+    }
   }
 }

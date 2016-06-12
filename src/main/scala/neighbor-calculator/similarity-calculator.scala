@@ -5,22 +5,6 @@ import breeze.linalg.DenseVector
 
 object SimilarityCalculator {
 
-  private lazy val list1 = List(1,0,1,1,0)
-  private lazy val list3 = List(1,1,1,0,0)
-  private lazy val list2 = List(1,0,1,1,0)
-  private lazy val list4 = List(1,Nil,1,0,0)
-
-  private lazy val vec1 = DenseVector(1,0,1,1,0)
-  private lazy val vec2 = DenseVector(1,0,1,1,0)
-  private lazy val vec3 = DenseVector(1,1,1,0,0)
-  // TODO: handle the nil case
-  //private lazy val vec4 = DenseVector(1,Nil,1,0,0)
-
-  def calculate  = {
-    binarySimilarity(list1, list3, jacaard)
-    binarySimilarity(vec1, vec3, jacaard)
-  }
-
   def jacaard(result: List[Int]) : Double  = result.sum.toDouble / result.length
 
   def binarySimilarity(arg1 : Any, arg2 : Any, similarityfx: List[Int] => Double) = {
@@ -53,6 +37,23 @@ object SimilarityCalculator {
     iterate(vector1, vector2, List[Int]() )
   }
 
+  def reduceNonSimilarOcuurances( list1: List[Any], list2: List[Any],
+                                  absentIndicator : Any = Nil) = {
+
+    @tailrec
+    def iterate(li1: List[Any], li2: List[Any],
+                res: (List[Any], List[Any])
+                ) : (List[Any], List[Any])  = (li1, li2) match {
+
+      case (x :: xs, y :: ys) => {
+        val next = if(x == absentIndicator || y == absentIndicator) res else ((res._1 :+ x), (res._2 :+ y))
+        iterate(xs, ys, next)
+      }
+      case _ => res
+    }
+
+    iterate(list1, list2, (List[Int](), List[Int]()) )
+  }
   def listBinarySimilarity(vector1: List[Any], vector2: List[Any]) = {
 
     @tailrec
