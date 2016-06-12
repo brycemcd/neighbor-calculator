@@ -17,6 +17,19 @@ object SimilarityCalculator {
     similarityfx(simList)
   }
 
+
+  // TODO: move this to Similarity Calculator
+  def compare(one: Tuple2[Int, List[Any]],
+    two: Tuple2[Int, List[Any]]) = {
+    val (left_id, left_features) = if(one._1 < two._1) one else two
+    val (right_id, right_features) = if(one._1 < two._1) two else one 
+
+    val sim = SimilarityCalculator.binarySimilarity(left_features,
+      right_features,
+      SimilarityCalculator.jacaard)
+    ((left_id, right_id), sim)
+  }
+
   def vectorBinarySimilarity(vector1: DenseVector[Int], vector2: DenseVector[Int]) = {
 
     def theSame(x: Int, y: Int) : Int = if(x == y) 1 else 0

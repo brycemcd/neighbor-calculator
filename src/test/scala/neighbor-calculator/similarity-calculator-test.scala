@@ -75,6 +75,27 @@ class SimilarityCalculatorSpec extends FunSpec {
       }
     }
 
+
+    describe("calculateNeighbor") {
+      lazy val personOne = (1, list1)
+      lazy val personTwo = (2, list2)
+
+      val sim = SimilarityCalculator.binarySimilarity(list1,
+                                                      list2,
+                                            SimilarityCalculator.jacaard)
+
+      it("returns a list of similar users") {
+        val compared = SimilarityCalculator.compare(personOne, personTwo)
+        assert(compared == ((1,2), sim))
+      }
+
+      it("returns a list of sorted user ids with similarity") {
+
+        val compared = SimilarityCalculator.compare(personTwo, personOne)
+        assert(compared == ((1,2), sim))
+      }
+    }
+
     describe(".reduceNonSimilarOcuurances") {
       val overlap = (List(1,0), List(1,1))
 
